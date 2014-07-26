@@ -10,6 +10,7 @@ var currentHash;
 
 function startBot(){
 	//Get ready
+	stopBot = false;
 	cleanUp();
 	ClearBets();
 	//Store starting balance
@@ -52,6 +53,7 @@ function bet(betAmount){
 			if(betAmount > balance)
 				alert("Current bet size larger than available balance. You have lost! :(");
 			cleanUp();
+			stopBot = false;
 			return;
 		}
 		var streakStr;
@@ -76,9 +78,10 @@ function bet(betAmount){
 			stopBot = true;
 			cleanUp();
 			return;
-		}/*else if(-1*(balance - initialBalance - betAmount) > maxLoss){
-			betAmount = (-1*(balance - initialBalance - betAmount) - maxLoss);
-		}*/
+		}else if(-1*(balance - initialBalance - betAmount) > maxLoss){
+			betAmount = (maxLoss + (balance - initialBalance));
+			log("LAST CHANCE :: Bet Amount "  + betAmount);
+		}
 		//Clear table
 		ClearBets();
 		//Add bet to table
@@ -91,6 +94,7 @@ function bet(betAmount){
 }
 
 function cleanUp(){
+	log("cleaning up bot vars");
 	//Clear Console
 	clear();
 	//Clean table
@@ -105,7 +109,7 @@ function cleanUp(){
 	currentHash = 0;
 	//Set global bools to false
 	neverStopWinning = false;
-	stopBot = false;
+	return;
 }
 
 function log(str){
