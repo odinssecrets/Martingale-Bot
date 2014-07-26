@@ -10,10 +10,8 @@ var currentHash;
 
 function startBot(){
 	//Get ready
+	cleanUp();
 	ClearBets();
-	//Set global bools to false
-	neverStopWinning = false;
-	stopBot = false;
 	//Store starting balance
 	initialBalance = balance;
 	//Get user parameters
@@ -91,16 +89,21 @@ function bet(betAmount){
 }
 
 function cleanUp(){
+	//Clear Console
+	clear();
+	//Clean table
 	ClearBets();
+	//Reset variables
 	blackStreak = 0;
 	redStreak = 0;
 	baseBet = 0;
 	initialBalance = 0;
 	maxLoss = 0;
 	maxWin = 0;
+	currentHash = 0;
+	//Set global bools to false
 	neverStopWinning = false;
 	stopBot = false;
-	currentHash = 0;
 }
 
 function log(str){
