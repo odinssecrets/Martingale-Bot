@@ -49,6 +49,8 @@ function bet(betAmount){
 		//Check to see if bot should stop
 		if(stopBot || betAmount > balance)
 		{
+			if(betAmount > balance)
+				alert("Current bet size larger than available balance. You have lost! :(");
 			cleanUp();
 			return;
 		}
@@ -74,9 +76,9 @@ function bet(betAmount){
 			stopBot = true;
 			cleanUp();
 			return;
-		}else if(-1*(balance - initialBalance - betAmount) > maxLoss){
+		}/*else if(-1*(balance - initialBalance - betAmount) > maxLoss){
 			betAmount = (-1*(balance - initialBalance - betAmount) - maxLoss);
-		}
+		}*/
 		//Clear table
 		ClearBets();
 		//Add bet to table
