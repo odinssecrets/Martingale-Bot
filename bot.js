@@ -49,8 +49,11 @@ function forceQuit(){
 function bet(betAmount){
 	if(currentHash!=spinHash){
 		//Check to see if bot should stop
-		if(stopBot)
+		if(stopBot || betAmount > balance)
+		{
+			cleanUp();
 			return;
+		}
 		var streakStr;
 		if(blackStreak>redStreak)
 			streakStr  = "Current Streak of " + blackStreak + " black."
@@ -66,13 +69,15 @@ function bet(betAmount){
 		if(!neverStopWinning && balance - initialBalance >=  maxWin){
 			alert("You have won!");
 			stopBot = true;
+			cleanUp();
 			return;
 		}else if(-1*(balance - initialBalance) >= maxLoss){
 			alert("You have reached maximum allowed losses!");
 			stopBot = true;
+			cleanUp();
 			return;
 		}else if(-1*(balance - initialBalance - betAmount) > maxLoss){
-				betAmount = (-1*(balance - initialBalance - betAmount) - maxLoss);
+			betAmount = (-1*(balance - initialBalance - betAmount) - maxLoss);
 		}
 		//Clear table
 		ClearBets();
@@ -83,6 +88,19 @@ function bet(betAmount){
 		
 		ModSpin(betAmount);
 	}
+}
+
+function cleanUp(){
+	ClearBets();
+	blackStreak = 0;
+	redStreak = 0;
+	baseBet = 0;
+	initialBalance = 0;
+	maxLoss = 0;
+	maxWin = 0;
+	neverStopWinning = false;
+	stopBot = false;
+	currentHash = 0;
 }
 
 function log(str){
