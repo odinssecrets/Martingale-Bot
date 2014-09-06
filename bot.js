@@ -95,8 +95,6 @@ function bet(betAmount){
 
 function cleanUp(){
 	log("cleaning up bot vars");
-	//Clear Console
-	clear();
 	//Clean table
 	ClearBets();
 	//Reset variables
